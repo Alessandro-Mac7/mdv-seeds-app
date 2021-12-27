@@ -61,7 +61,7 @@ export default {
     },
     handleLogin(data) {
       console.log(data)
-      this.$router.push('user/home');
+      this.$router.replace('/user/home');
     }
   }
 
@@ -82,5 +82,16 @@ export default {
     background-repeat: no-repeat; 
     background-size: 100% 100%;
     background-color: #fff;
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) { 
+  .bg-layout {
+    background: url('../assets/layout-2-lg.png');
+    background-position: bottom; 
+    background-repeat: no-repeat; 
+    background-size: 100%;
+    background-color: #fff;
+  }
 }
 </style>

@@ -21,16 +21,14 @@
               Seleziona data:
             </div>
           </div>
-          <div class="col-12 mx-auto">
-            <input type="date" class="form-control color3 shadow" v-model="date">
+          <div class="col-12 ">
+            <input type="date" class="form-control mx-auto color3" v-model="date">
           </div>
         </section>
 
         <section class="row gy-3 mt-4 mb-5">
           <div class="col-12 mx-auto">
-            <div class="card card-body shadow-lg color3">
-              <h5 class="my-3">Semino 25-12-2021</h5>
-            </div>
+            <seed-item pickDate="25-12-2021"></seed-item>
           </div>
         </section>
 
@@ -42,11 +40,18 @@
 
 <script>
 // @ is an alias to /src
+import SeedItem from '@/components/seeds/SeedItem.vue';
 
 export default {
+  components: { SeedItem },
   data() {
     return {
       date: ''
+    }
+  },
+  computed: {
+    filteredSeeds() {
+      return this.$store.getters['seed/seeds'];
     }
   },
   methods: {
@@ -82,11 +87,25 @@ export default {
 }
 .form-control {
   background-color: transparent;
+  max-width: 15rem;
   border: none;
+  box-shadow: none;
 }
-input, input:focus {
+input, input:focus, input:hover {
   text-align: center;
-  color: #6e4f3a;
+  color: #a58b7a;
   background-color: transparent;
+  box-shadow: none;
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) { 
+  .bg-layout {
+    background: url('../assets/layout-4-lg.png');
+    background-position: bottom; 
+    background-repeat: no-repeat; 
+    background-size: 100%;
+    background-color: #fff;
+  }
 }
 </style>

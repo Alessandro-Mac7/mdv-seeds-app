@@ -62,4 +62,15 @@ export default {
 .small {
   font-size: 0.70rem;
 }
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) { 
+  .bg-layout {
+    background: url('../assets/layout-1-lg.png');
+    background-position: bottom; 
+    background-repeat: no-repeat; 
+    background-size: 100%;
+    background-color: #fff;
+  }
+}
 </style>

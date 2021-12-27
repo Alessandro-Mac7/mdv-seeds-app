@@ -33,7 +33,9 @@
         </section>
 
         <section class="row mt-5">
-          <base-button title="Pesca un semino" @click="handleClick"></base-button>
+          <div class="col-12">
+            <base-button title="Pesca un semino" @click="handleClick"></base-button>
+          </div>
         </section>
 
       </base-card>
@@ -76,5 +78,15 @@ export default {
     background-repeat: no-repeat; 
     background-size: 100% 100%;
     background-color: #fff;
+}
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) { 
+  .bg-layout {
+    background: url('../assets/layout-3-lg.png');
+    background-position: bottom; 
+    background-repeat: no-repeat; 
+    background-size: 100%;
+    background-color: #fff;
+  }
 }
 </style>

@@ -1,12 +1,13 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+
+import seedModule from '@/store/modules/seed';
+import userModule from '@/store/modules/seed';
+import authModule from '@/store/modules/seed';
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    seed: seedModule,
+    userSeed: userModule,
+    auth: authModule
   }
-})
+});

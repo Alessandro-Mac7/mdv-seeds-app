@@ -22,3 +22,16 @@ app.component('back-button', BackButton);
 app.component('base-dialog', BaseDialog);
 
 app.mount('#app');
+
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+/* const firebaseConfig = {
+    apiKey: "AIzaSyAtlxhU6wg0hwsj3ANJVWP4pdzlPyTn3EA",
+    authDomain: "mdv-seed.firebaseapp.com",
+    projectId: "mdv-seed",
+    storageBucket: "mdv-seed.appspot.com",
+    messagingSenderId: "837140767054",
+    appId: "1:837140767054:web:0b289ce168afc1e10d7e1f",
+    measurementId: "G-HFTTE360TV"
+}; */
