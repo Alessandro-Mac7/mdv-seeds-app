@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '../store/index.js';
 
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
@@ -15,36 +16,43 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: Auth
+    component: Auth,
+    meta: { requiresUnauth: true }
   },
   {
     path: '/user/home',
     name: 'UserHome',
-    component: UserHome
+    component: UserHome,
+    meta: { requiresAuth: true }
   },
   {
     path: '/user/seed-list',
     name: 'SeedList',
-    component: SeedList
+    component: SeedList,
+    meta: { requiresAuth: true }
   },
   {
     path: '/user/collect-seed',
     name: 'CollectSeed',
-    component: CollectSeed
+    component: CollectSeed,
+    meta: { requiresAuth: true }
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  { path: '/:notFound(.*)', component: Home }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
-})
+});
+
+router.beforeEach(function(to, _, next) {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+    next('/user/home');
+  } else {
+    next();
+  }
+});
 
 export default router

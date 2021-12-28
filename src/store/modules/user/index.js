@@ -6,50 +6,9 @@ export default {
     namespaced: true,
     state() {
         return {
-            user: {
-                userId: 1,
-                name: "Alessandro",
-                lastName: "Macri"
-            },
-            userSeeds: [
-                {
-                    id: 1,
-                    userId: 2,
-                    seed: [
-                        {
-                            id: 1,
-                            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nibh nec lectus lacinia porta. Duis efficitur turpis eu risus lacinia, vitae sodales dui varius. Ut pellentesque laoreet iaculis. ",
-                            color: "blue",
-                            code: "KzXpV",
-                        },
-                        {
-                            id: 3,
-                            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nibh nec lectus lacinia porta. Duis efficitur turpis eu risus lacinia, vitae sodales dui varius. Ut pellentesque laoreet iaculis. ",
-                            color: "green",
-                            code: "zhynZ"
-                        },
-                        {
-                            id: 4,
-                            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nibh nec lectus lacinia porta. Duis efficitur turpis eu risus lacinia, vitae sodales dui varius. Ut pellentesque laoreet iaculis. ",
-                            color: "yellow",
-                            code: "XC7c1"
-                        },
-                        {
-                            id: 5,
-                            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nibh nec lectus lacinia porta. Duis efficitur turpis eu risus lacinia, vitae sodales dui varius. Ut pellentesque laoreet iaculis. ",
-                            color: "blue",
-                            code: "Qf0e8"
-                        },
-                        {
-                            id: 6,
-                            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nibh nec lectus lacinia porta. Duis efficitur turpis eu risus lacinia, vitae sodales dui varius. Ut pellentesque laoreet iaculis. ",
-                            color: "green",
-                            code: "FHw0x"
-                        },
-                    ],
-                    pickDate: '2021-12-23'
-                },                
-            ]
+            userSeeds: [],
+            colors: [ {id:1, color:'blue'}, {id:2, color:'yellow'}, {id:3, color:'light-blue'}, {id:4, color:'green'},],
+            lastSeed: {}
         }
     },
     mutations,

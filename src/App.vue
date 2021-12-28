@@ -11,6 +11,26 @@
   </router-view>
 </template>
 
+<script>
+export default {
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    }
+  },
+  created() {
+    this.$store.dispatch('tryLogin');
+  },
+  watch: {
+    didAutoLogout(curValue, oldValue) {
+      if (curValue && curValue !== oldValue) {
+        this.$router.replace('/user/home');
+      }
+    }
+  }
+}
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
@@ -42,6 +62,12 @@ body {
 
 .logo-img {
   width: 15rem;
+}
+
+.max-height{
+    max-height: 60vh !important;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 /* Medium devices (tablets, 768px and up)  */

@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+    <!-- Toast -->
+    <base-toast :show="!!toast.val" :type="toast.type">
+        {{ toast.message }}
+    </base-toast>
+
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
 
     <div class="row">
       <base-card class="bg-layout">
@@ -26,10 +34,19 @@
           </div>
         </section>
 
-        <section class="row gy-3 mt-4 mb-5">
-          <div class="col-12 mx-auto">
-            <seed-item pickDate="25-12-2021"></seed-item>
+        <section v-if="hasSeeds" class="row max-height gy-4 mt-4 mb-5">
+          <div v-for="seed in filteredSeeds" :key="seed.id" class="col-12 mx-auto">
+            <seed-item 
+                :pickDate="seed.pickDate" 
+                :color="seed.color" 
+                :message="seed.message"></seed-item>
           </div>
+        </section>
+        <section v-else class="row mt-4 mb-5">
+          <div class="card card-body shadow-lg ">
+              <h5 class="my-3">Semino non disponibile</h5>
+              <p class="small">Nessun semino disponibile, raccogliene uno per ricevere una santa parola.</p>
+            </div>
         </section>
 
       </base-card>
@@ -46,12 +63,24 @@ export default {
   components: { SeedItem },
   data() {
     return {
-      date: ''
+      date: '',
+      isLoading: false,
+      toast: {
+          val: false,
+          message: '',
+          type: 'danger'
+      }
     }
+  },
+  created() {
+    this.loadSeedList();
   },
   computed: {
     filteredSeeds() {
-      return this.$store.getters['seed/seeds'];
+      return this.$store.getters['userSeed/seeds'];
+    },    
+    hasSeeds() {
+      return this.$store.getters['userSeed/hasSeeds'];
     }
   },
   methods: {
@@ -64,6 +93,32 @@ export default {
     },
     handleClick() {
       this.$router.push('collect-seed')
+    },
+    async loadSeedList() {
+      this.isLoading = true;
+      try {
+          await this.$store.dispatch('userSeed/loadUserSeeds');
+          // const redirectUrl = '/' + (this.$route.query.redirect || 'user/home');
+      } catch (error) {
+        this.showToast(error.message || 'Errore nel caricamento semino!');
+      }
+      this.isLoading = false;
+    },
+    showToast(message, isSuccess = false) {
+      this.toast.val = true;
+      this.toast.message = message;
+
+      if (isSuccess) {
+          this.toast.type = 'success';
+          setTimeout(() => {
+          this.toast.val = false;
+          }, 700);
+      } else {
+          this.toast.type = 'danger';
+          setTimeout(() => {
+          this.toast.val = false
+          }, 3000);
+      }
     }
   }
 
@@ -96,6 +151,11 @@ input, input:focus, input:hover {
   color: #a58b7a;
   background-color: transparent;
   box-shadow: none;
+}
+.max-height{
+    max-height: 40vh !important;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 /* Medium devices (tablets, 768px and up)  */

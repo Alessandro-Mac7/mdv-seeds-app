@@ -1,8 +1,8 @@
 import { createStore } from 'vuex';
 
 import seedModule from '@/store/modules/seed';
-import userModule from '@/store/modules/seed';
-import authModule from '@/store/modules/seed';
+import userModule from '@/store/modules/user';
+import authModule from '@/store/modules/auth';
 
 export default createStore({
   modules: {

@@ -1,6 +1,15 @@
 <template>
   <div class="container">
 
+    <!-- Toast -->
+    <base-toast :show="!!toast.val" :type="toast.type">
+        {{ toast.message }}
+    </base-toast>
+
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
+
     <div class="row">
       <base-card class="bg-layout">
         <header class="row my-2">
@@ -20,7 +29,7 @@
         <section class="row my-4">
           <div class="col-12 mx-auto">
             <login-form v-if="!signUp" @login-data="handleLogin"></login-form>
-            <register-form v-else></register-form>
+            <register-form v-else @register-data="handleSignup"></register-form>
           </div>
         </section>
 
@@ -42,6 +51,12 @@ export default {
   data() {
     return {
       dialog: false,
+      isLoading: false,
+      toast: {
+          val: false,
+          message: '',
+          type: 'danger'
+      },
       signUp: false
     }
   },
@@ -59,10 +74,43 @@ export default {
         this.signUp = true;
       }
     },
-    handleLogin(data) {
-      console.log(data)
-      this.$router.replace('/user/home');
-    }
+    async handleLogin(data) {
+      this.isLoading = true;
+      try {
+          await this.$store.dispatch('login', data);
+          // const redirectUrl = '/' + (this.$route.query.redirect || 'user/home');
+          this.$router.replace('/user/home');
+      } catch (error) {
+        this.showToast(error.message || 'Errore nel Login!');
+      }
+      this.isLoading = false;
+    },
+    async handleSignup(data) {
+      this.isLoading = true;
+      try {
+          await this.$store.dispatch('signup', data);
+          // const redirectUrl = '/' + (this.$route.query.redirect || 'user/home');
+      } catch (error) {
+        this.showToast(error.message || 'Errore nella registrazione!');
+      }
+      this.isLoading = false;
+    },
+    showToast(message, isSuccess = false) {
+      this.toast.val = true;
+      this.toast.message = message;
+
+      if (isSuccess) {
+          this.toast.type = 'success';
+          setTimeout(() => {
+          this.toast.val = false;
+          }, 700);
+      } else {
+          this.toast.type = 'danger';
+          setTimeout(() => {
+          this.toast.val = false
+          }, 3000);
+      }
+    },
   }
 
 }

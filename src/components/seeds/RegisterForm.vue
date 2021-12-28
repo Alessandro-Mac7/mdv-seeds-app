@@ -39,13 +39,12 @@ export default {
     },
     methods: {
         submitForm() {
-            this.validateForm();
-
-            // if (!this.formIsValid) {
-            //     this.showToast();
-            //     return;
-            // }
-
+            this.formIsValid = true;
+            if (this.email === '' || !this.email.includes('@') || this.password.length < 6) {
+                this.formIsValid = false;
+                return;
+            }
+            
             const formData = {
                 name: this.name,
                 lastName: this.lastName,

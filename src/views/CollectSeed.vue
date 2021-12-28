@@ -1,9 +1,18 @@
 <template>
   <div class="container">
 
-    <base-dialog :show="!!dialog" title="Semino 25-12-2021" @close="clearDialog">
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and  Lorem Ipsum.</p>
+    <base-dialog :show="!!dialog" :title="'Semino' + seedTitle" @close="clearDialog">
+    <p>{{ seedMessage }}</p>
     </base-dialog>
+
+    <!-- Toast -->
+    <base-toast :show="!!toast.val" :type="toast.type">
+        {{ toast.message }}
+    </base-toast>
+
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
 
     <div class="row">
       <base-card class="bg-layout">
@@ -20,22 +29,13 @@
         </section>
 
         <section class="row my-5">
-          <div class="col">
-            <color-button color="blue"></color-button>
-          </div>
-          <div class="col">
-            <color-button color="yellow"></color-button>
-          </div>
-          <div class="col">
-            <color-button color="light-blue"></color-button>
-          </div>
-          <div class="col">
-            <color-button color="green"></color-button>
+          <div v-for="c in colors" :key="c.id" class="col">
+            <color-button :color="c.color" @click="handleColor(c)"></color-button>
           </div>
         </section>
 
         <section class="row mt-5">
-          <base-button title="Ottini il semino" @click="showDialog"></base-button>
+          <base-button title="Ottini il semino" @click="pickSeed" :disabled="!selectedColor"></base-button>
         </section>
 
       </base-card>
@@ -50,9 +50,23 @@ import ColorButton from '@/components/seeds/ColorButton.vue'
 
 export default {
   components: { ColorButton },
+  computed: {
+    colors() {
+      return this.$store.getters['userSeed/colors'];
+    }
+  },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      selectedColor: null,
+      seedTitle: null,
+      seedMessage: null,
+      isLoading: false,
+      toast: {
+          val: false,
+          message: '',
+          type: 'danger'
+      }
     }
   },
   methods: {
@@ -62,6 +76,39 @@ export default {
     showDialog() {
       this.dialog = true;
     },
+    handleColor(c) {
+      this.selectedColor = c.color;
+    },
+    async pickSeed() {
+      this.isLoading = true;
+      try {
+          await this.$store.dispatch('userSeed/pickSeed');
+          // const redirectUrl = '/' + (this.$route.query.redirect || 'user/home');
+          const lastSeed = this.$store.getters['userSeed/lastSeed'];
+          this.seedTitle = lastSeed.pickDate;
+          this.seedMessage = lastSeed.message;
+          this.showDialog()
+      } catch (error) {
+        this.showToast(error.message || 'Errore nel caricamento semino!');
+      }
+      this.isLoading = false;
+    },
+    showToast(message, isSuccess = false) {
+      this.toast.val = true;
+      this.toast.message = message;
+
+      if (isSuccess) {
+          this.toast.type = 'success';
+          setTimeout(() => {
+          this.toast.val = false;
+          }, 700);
+      } else {
+          this.toast.type = 'danger';
+          setTimeout(() => {
+          this.toast.val = false
+          }, 3000);
+      }
+    }
   }
 
 }

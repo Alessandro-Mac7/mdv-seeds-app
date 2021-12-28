@@ -5,7 +5,7 @@
       <dialog open v-if="show">
         <header>
           <slot name="header">
-            <h3 class="text-center">{{ title }}</h3>
+            <h4 class="text-center">{{ title }}</h4>
           </slot>
         </header>
         <section class="text-center">

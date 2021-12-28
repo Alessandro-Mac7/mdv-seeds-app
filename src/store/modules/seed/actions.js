@@ -1,5 +1,5 @@
 export default {
-    async loadSeed(context) { 
+    async loadUserSeed(context) { 
         console.log("BEGIN: action -> admin/product/loadCart");
 
         const response = await fetch(

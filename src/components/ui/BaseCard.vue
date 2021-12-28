@@ -27,7 +27,6 @@ export default {
     -moz-border-radius: 1.563rem;
     border-radius: 1.563rem;
     min-height: 75vh;
-
 }
 
 
