@@ -30,7 +30,6 @@ export default {
     margin-top: 130px;
 }
 .toast-alert {
-    font-family: 'Oswald', cursive;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.2);
